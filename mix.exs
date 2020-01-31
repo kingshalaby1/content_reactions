@@ -36,7 +36,10 @@ defmodule ContentReactions.MixProject do
       {:phoenix_pubsub, "~> 1.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:ecto, "~> 2.1.0"},
+      {:ecto_mnesia, "~> 0.9.0"}
+
     ]
   end
 end

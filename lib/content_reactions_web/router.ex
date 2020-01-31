@@ -7,5 +7,6 @@ defmodule ContentReactionsWeb.Router do
 
   scope "/api", ContentReactionsWeb do
     pipe_through :api
+    resources "/reactions", ReactionController, except: [:new, :edit]
   end
 end
