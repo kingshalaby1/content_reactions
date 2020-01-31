@@ -10,17 +10,15 @@ defmodule ContentReactionsWeb.ReactionControllerTest do
     reaction_type: 42,
     user_id: "7488a646-e31f-11e4-aace-600308960662"
   }
-  @update_attrs %{
-    action: 43,
-    content_id: "7488a646-e31f-11e4-aace-600308960668",
-    reaction_type: 43,
-    user_id: "7488a646-e31f-11e4-aace-600308960668"
-  }
   @invalid_attrs %{action: nil, content_id: nil, reaction_type: nil, user_id: nil}
 
   def fixture(:reaction) do
     {:ok, reaction} = Reactions.create_reaction(@create_attrs)
     reaction
+  end
+
+  setup_all %{conn: conn} do
+    {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
   setup %{conn: conn} do
@@ -59,7 +57,10 @@ defmodule ContentReactionsWeb.ReactionControllerTest do
   describe "update reaction" do
     setup [:create_reaction]
 
-    test "renders reaction when data is valid", %{conn: conn, reaction: %Reaction{id: id} = reaction} do
+    test "renders reaction when data is valid", %{
+      conn: conn,
+      reaction: %Reaction{id: id} = reaction
+    } do
       conn = put(conn, Routes.reaction_path(conn, :update, reaction), reaction: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

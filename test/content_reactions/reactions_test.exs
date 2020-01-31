@@ -6,8 +6,18 @@ defmodule ContentReactions.ReactionsTest do
   describe "reactions" do
     alias ContentReactions.Reactions.Reaction
 
-    @valid_attrs %{action: 42, content_id: "7488a646-e31f-11e4-aace-600308960662", reaction_type: 42, user_id: "7488a646-e31f-11e4-aace-600308960662"}
-    @update_attrs %{action: 43, content_id: "7488a646-e31f-11e4-aace-600308960668", reaction_type: 43, user_id: "7488a646-e31f-11e4-aace-600308960668"}
+    @valid_attrs %{
+      action: 42,
+      content_id: "7488a646-e31f-11e4-aace-600308960662",
+      reaction_type: 42,
+      user_id: "7488a646-e31f-11e4-aace-600308960662"
+    }
+    @update_attrs %{
+      action: 43,
+      content_id: "7488a646-e31f-11e4-aace-600308960668",
+      reaction_type: 43,
+      user_id: "7488a646-e31f-11e4-aace-600308960668"
+    }
     @invalid_attrs %{action: nil, content_id: nil, reaction_type: nil, user_id: nil}
 
     def reaction_fixture(attrs \\ %{}) do

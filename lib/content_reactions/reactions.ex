@@ -2,12 +2,43 @@ defmodule ContentReactions.Reactions do
   @moduledoc """
   The Reactions context.
   """
+  use EnumType
 
-#  import Ecto.Query, warn: false
-#  alias ContentReactions.Repo
+  defenum ReactionTypes do
+    value(Fire, 1)
+    value(Like, 2)
+    value(Celebrate, 3)
+
+    default(Fire)
+  end
 
   alias ContentReactions.Reactions.{Reaction, Counter}
 
+  def get_reaction_counts(content_id) do
+    results =
+      Enum.reduce(ReactionTypes.enums(), %{}, fn type, acc ->
+        case Counter.read_count(content_id, type.value) do
+          {:ok, count} ->
+            acc
+            |> Map.put_new(
+              type
+              |> Atom.to_string()
+              |> String.split(".")
+              |> List.last(),
+              count
+            )
+
+          {:error, :not_found} ->
+            acc
+        end
+      end)
+
+    if Enum.empty?(results) do
+      {:error, :not_found}
+    else
+      {:ok, results}
+    end
+  end
 
   @doc """
   Creates a reaction.
@@ -22,28 +53,15 @@ defmodule ContentReactions.Reactions do
 
   """
   def create_reaction(attrs \\ %{}) do
-#    %Reaction{}
-#    |> Reaction.changeset(attrs)
-#    |> Repo.insert()
-
-    attrs = Map.put_new(attrs, "created_at", DateTime.utc_now())
-
     %Reaction{}
     |> Reaction.changeset(attrs)
-    |> Counter.insert()
+    |> validate_reaction()
+    |> Counter.create_reaction()
   end
 
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking reaction changes.
-
-  ## Examples
-
-      iex> change_reaction(reaction)
-      %Ecto.Changeset{source: %Reaction{}}
-
-  """
-  def change_reaction(%Reaction{} = reaction) do
-    Reaction.changeset(reaction, %{})
+  defp validate_reaction(%Ecto.Changeset{valid?: true} = params) do
+    {:ok, params.changes}
   end
+
+  defp validate_reaction(changeset), do: {:error, changeset}
 end

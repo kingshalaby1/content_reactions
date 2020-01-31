@@ -9,7 +9,9 @@ defmodule ContentReactions.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      ContentReactionsWeb.Endpoint
+      ContentReactionsWeb.Endpoint,
+      {ContentReactions.Reactions.Counter, []}
+
       # Starts a worker by calling: ContentReactions.Worker.start_link(arg)
       # {ContentReactions.Worker, arg},
     ]

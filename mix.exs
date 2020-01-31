@@ -37,9 +37,8 @@ defmodule ContentReactions.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:ecto, "~> 2.1.0"},
-      {:ecto_mnesia, "~> 0.9.0"}
-
+      {:ecto, "~> 3.1"},
+      {:enum_type, "~> 1.0.0"}
     ]
   end
 end

@@ -5,8 +5,9 @@ defmodule ContentReactionsWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ContentReactionsWeb do
+  scope "/", ContentReactionsWeb do
     pipe_through :api
-    resources "/reactions", ReactionController, except: [:new, :edit]
+    post "/reactions", ReactionController, :create
+    get "/reaction_counts/:id", ReactionController, :reaction_counts
   end
 end
