@@ -91,7 +91,7 @@ defmodule ContentReactions.Reactions.Counter do
     end
   end
 
-  defp read_previous_reaction(record) do
+  def read_previous_reaction(record) do
     case :ets.lookup(:reactions, record) do
       [{^record, action}] ->
         {:ok, action}
@@ -101,7 +101,7 @@ defmodule ContentReactions.Reactions.Counter do
     end
   end
 
-  defp ensure_counter_exists(content_id, reaction_type) do
+  def ensure_counter_exists(content_id, reaction_type) do
     with [] <- :ets.lookup(:reaction_counts, {content_id, reaction_type}) do
       :ets.insert(:reaction_counts, {{content_id, reaction_type}, 0})
     end
