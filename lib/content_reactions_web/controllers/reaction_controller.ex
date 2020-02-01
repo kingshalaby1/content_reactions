@@ -18,9 +18,9 @@ defmodule ContentReactionsWeb.ReactionController do
         render(conn, "reactions_count.json", reaction_counts: body)
 
       {:error, :not_found} ->
-      conn
-      |> put_status(:not_found)
-      |>  json(%{"message" => "content not found"})
+        conn
+        |> put_status(:not_found)
+        |> json(%{"message" => "content not found"})
     end
   end
 end
